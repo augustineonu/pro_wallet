@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100264247384",
+    "project_id": "pro-wallet-d3bfe",
+    "storage_bucket": "pro-wallet-d3bfe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100264247384:android:6c7638b24750ec0549ca2d",
+        "android_client_info": {
+          "package_name": "com.example.pro_wallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyaafn_GSCHNZCkkNTFXN9vQR-p3luXVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

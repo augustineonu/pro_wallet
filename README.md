@@ -1,16 +1,64 @@
 # pro_wallet
 
-A new Flutter project.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+# Project Structure
+lib/
+  ├── main.dart
+  ├── app/
+  │   ├── routes/
+  │   │   └── app_pages.dart
+  │   ├── data/
+  │   │   ├── models/
+  │   │   │   ├── user_model.dart
+  │   │   │   └── transaction_model.dart
+  │   │   └── services/
+  │   │       └── firebase_service.dart
+  │   ├── modules/
+  │   │   ├── auth/
+  │   │   │   ├── controllers/
+  │   │   │   │   └── auth_controller.dart
+  │   │   │   ├── views/
+  │   │   │   │   ├── login_view.dart
+  │   │   │   │   └── signup_view.dart
+  │   │   │   └── bindings/
+  │   │   │       └── auth_binding.dart
+  │   │   ├── home/
+  │   │   │   ├── controllers/
+  │   │   │   │   └── home_controller.dart
+  │   │   │   ├── views/
+  │   │   │   │   └── home_view.dart
+  │   │   │   └── bindings/
+  │   │   │       └── home_binding.dart
+  │   │   ├── history/
+  │   │   │   ├── controllers/
+  │   │   │   │   └── history_controller.dart
+  │   │   │   ├── views/
+  │   │   │   │   └── history_view.dart
+  │   │   │   └── bindings/
+  │   │   │       └── history_binding.dart
+  │   │   ├── profile/
+  │   │   │   ├── controllers/
+  │   │   │   │   └── profile_controller.dart
+  │   │   │   ├── views/
+  │   │   │   │   └── profile_view.dart
+  │   │   │   └── bindings/
+  │   │   │       └── profile_binding.dart
+  │   │   └── dashboard/
+  │   │       ├── controllers/
+  │   │       │   └── dashboard_controller.dart
+  │   │       ├── views/
+  │   │       │   └── dashboard_view.dart
+  │   │       └── bindings/
+  │   │           └── dashboard_binding.dart
+  │   └── core/
+  │       ├── theme/
+  │       │   └── app_theme.dart
+  │       ├── utils/
+  │       │   └── helpers.dart
+  │       └── values/
+  │           └── constants.dart
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
