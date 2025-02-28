@@ -20,7 +20,7 @@ class AppPages {
     GetPage(
       name: Routes.SIGNUP,
       page: () => SignupView(),
-      // binding: AuthBinding(),
+      binding: SignupBinding(),
     ),
     GetPage(
       name: Routes.DASHBOARD,

@@ -45,6 +45,9 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       userModel.value = await _firebaseService.getUserProfile(userId);
+      // var useerData = await _firebaseService.getUserProfile(userId);
+      print("User profile loaded: ${userModel.value!.toJson()}");
+      // print("User profile loaded: ${useerData!.toJson()}");
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -58,6 +61,8 @@ class AuthController extends GetxController {
     }
   }
 
+  String signupErrorMessge = "";
+
   Future<void> signUp(String name, String email, String password) async {
     isLoading.value = true;
     try {
@@ -68,12 +73,18 @@ class AuthController extends GetxController {
         id: userCredential.user!.uid,
         email: email,
         name: name,
-        walletBalance: 1000.0, // Default balance
+        walletBalance: 1000.0,
         createdAt: DateTime.now(),
       );
 
-      await _firebaseService.createUserProfile(newUser);
-      userModel.value = newUser;
+      print("Saving user to Firestore: ${newUser.toJson()}");
+
+      await _firebaseService.createUserProfile(newUser).then((_) async {
+        await _firebaseService.createUserTransaction(newUser.id);
+      });
+
+      // Wait for the profile to be fully loaded
+      await loadUserProfile(userCredential.user!.uid);
 
       Get.snackbar(
         'Success',
@@ -82,10 +93,19 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+
+      // Now navigate to the dashboard
+      Get.offAllNamed(Routes.DASHBOARD);
     } catch (e) {
+      print("Signup error: $e");
+      if (e.toString().contains("email address is already in use")) {
+        signupErrorMessge = "Email address is already in use";
+      } else {
+        signupErrorMessge = e.toString();
+      }
       Get.snackbar(
         'Error',
-        'Failed to create account: ${e.toString()}',
+        'Failed to create account: $signupErrorMessge',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,

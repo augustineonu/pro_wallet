@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pro_wallet/app_theme.dart';
+import 'package:pro_wallet/core/routing/app_pages.dart';
 import 'package:pro_wallet/data/models/transaction_model.dart';
 import 'package:pro_wallet/modules/dashboard/dashboard_controllers/dashboard_controller.dart';
 import 'package:pro_wallet/modules/history/history_controllers/history_controller.dart';
@@ -19,7 +20,6 @@ class DashboardBinding extends Bindings {
 
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +64,7 @@ class DashboardView extends GetView<DashboardController> {
         );
       }),
       floatingActionButton: Obx(() {
+        
         // Only show FAB on home screen
         return controller.currentIndex.value == 0
             ? FloatingActionButton(
@@ -126,10 +127,11 @@ class _TransactionBottomSheet extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            
+
             // Description field
             TextField(
-              onChanged: (value) => homeController.transactionDescription.value = value,
+              onChanged: (value) =>
+                  homeController.transactionDescription.value = value,
               decoration: const InputDecoration(
                 labelText: 'Description',
                 border: OutlineInputBorder(
@@ -138,12 +140,13 @@ class _TransactionBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Amount field
             TextField(
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  homeController.transactionAmount.value = double.tryParse(value) ?? 0.0;
+                  homeController.transactionAmount.value =
+                      double.tryParse(value) ?? 0.0;
                 }
               },
               decoration: const InputDecoration(
@@ -153,16 +156,18 @@ class _TransactionBottomSheet extends StatelessWidget {
                 ),
                 prefixIcon: Icon(Icons.attach_money),
               ),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             ),
             const SizedBox(height: 24),
-            
+
             // Transaction type buttons
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => homeController.addTransaction(TransactionType.income),
+                    onPressed: () =>
+                        homeController.addTransaction(TransactionType.income),
                     icon: const Icon(Icons.arrow_downward),
                     label: const Text('Income'),
                     style: ElevatedButton.styleFrom(
@@ -174,7 +179,8 @@ class _TransactionBottomSheet extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => homeController.addTransaction(TransactionType.expense),
+                    onPressed: () =>
+                        homeController.addTransaction(TransactionType.expense),
                     icon: const Icon(Icons.arrow_upward),
                     label: const Text('Expense'),
                     style: ElevatedButton.styleFrom(

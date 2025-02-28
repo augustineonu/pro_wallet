@@ -42,6 +42,7 @@ class FirebaseService extends GetxService {
   Future<UserModel?> getUserProfile(String userId) async {
     final doc = await _firestore.collection('users').doc(userId).get();
     if (doc.exists) {
+      print("Firebase Service:: profile loaded: ${doc.data()}");
       return UserModel.fromJson({...doc.data()!, 'id': doc.id});
     }
     return null;
@@ -61,7 +62,7 @@ class FirebaseService extends GetxService {
         id: userId,
         userId: userId,
         type: TransactionType.income,
-        amount: 0.0,
+        amount: 1000,
         description: 'Initial balance',
         createdAt: DateTime.now(),
       ).toJson(),

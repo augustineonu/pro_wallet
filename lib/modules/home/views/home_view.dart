@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pro_wallet/app_theme.dart';
+import 'package:pro_wallet/core/routing/app_pages.dart';
 import 'package:pro_wallet/data/models/transaction_model.dart';
 import 'package:pro_wallet/modules/auth/controllers/auth_controller.dart';
 import 'package:pro_wallet/modules/dashboard/dashboard_controllers/dashboard_controller.dart';
 import 'package:pro_wallet/modules/home/controllers/home_controller.dart';
-
 
 class HomeviewBinding extends Bindings {
   @override
@@ -14,14 +14,14 @@ class HomeviewBinding extends Bindings {
     Get.put<HomeController>(HomeController());
   }
 }
+
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
 
-  
-
   @override
   Widget build(BuildContext context) {
-     Get.put<HomeController>(HomeController());
+    Get.put<HomeController>(HomeController());
+    Get.put(AuthController());
     final authController = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
@@ -47,10 +47,10 @@ class HomeView extends GetView<HomeController> {
                   ),
                 );
               }),
-              
+
               // Wallet balance card
               _buildWalletCard(context, authController),
-              
+
               // Recent transactions
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -62,13 +62,14 @@ class HomeView extends GetView<HomeController> {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     TextButton(
-                      onPressed: () => Get.find<DashboardController>().changePage(1),
+                      onPressed: () =>
+                          Get.find<DashboardController>().changePage(1),
                       child: const Text('See All'),
                     ),
                   ],
                 ),
               ),
-              
+
               // Transactions list
               Obx(() {
                 if (controller.isLoading.value) {
@@ -79,7 +80,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   );
                 }
-                
+
                 if (controller.recentTransactions.isEmpty) {
                   return Card(
                     elevation: 2,
@@ -105,9 +106,12 @@ class HomeView extends GetView<HomeController> {
                             const SizedBox(height: 8),
                             Text(
                               'Tap + to add your first transaction',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.grey,
+                                  ),
                             ),
                           ],
                         ),
@@ -115,7 +119,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   );
                 }
-                
+
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -135,7 +139,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildWalletCard(BuildContext context, AuthController authController) {
     final currencyFormat = NumberFormat.currency(symbol: '\$');
-    
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -158,28 +162,29 @@ class HomeView extends GetView<HomeController> {
                 Text(
                   'Current Balance',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.white.withOpacity(0.9),
-                  ),
+                        color: Colors.white.withOpacity(0.9),
+                      ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             Obx(() {
-              final balance = authController.userModel.value?.walletBalance ?? 0.0;
+              final balance =
+                  authController.userModel.value?.walletBalance ?? 0.0;
               return Text(
                 currencyFormat.format(balance),
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
               );
             }),
             const SizedBox(height: 12),
             Text(
               'Available Balance',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.white.withOpacity(0.7),
-              ),
+                    color: Colors.white.withOpacity(0.7),
+                  ),
             ),
           ],
         ),
@@ -187,16 +192,16 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildTransactionItem(BuildContext context, TransactionModel transaction) {
+  Widget _buildTransactionItem(
+      BuildContext context, TransactionModel transaction) {
     final currencyFormat = NumberFormat.currency(symbol: '\$');
     final dateFormat = DateFormat('MMM d, yyyy • h:mm a');
-    
+
     final isIncome = transaction.type == TransactionType.income;
     final color = isIncome ? AppTheme.incomeColor : AppTheme.expenseColor;
-    final icon = isIncome
-        ? Icons.arrow_downward_rounded
-        : Icons.arrow_upward_rounded;
-    
+    final icon =
+        isIncome ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
@@ -235,8 +240,8 @@ class HomeView extends GetView<HomeController> {
                   Text(
                     dateFormat.format(transaction.createdAt),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                    ),
+                          color: Colors.grey,
+                        ),
                   ),
                 ],
               ),
@@ -244,9 +249,9 @@ class HomeView extends GetView<HomeController> {
             Text(
               '${isIncome ? '+' : '-'} ${currencyFormat.format(transaction.amount)}',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: color,
-                fontWeight: FontWeight.bold,
-              ),
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),

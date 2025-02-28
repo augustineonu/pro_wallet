@@ -4,6 +4,13 @@ import 'package:pro_wallet/app_theme.dart';
 import 'package:pro_wallet/core/routing/app_pages.dart';
 import 'package:pro_wallet/modules/auth/controllers/auth_controller.dart';
 
+class SignupBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put<AuthController>(AuthController());
+  }
+}
+
 class SignupView extends GetView<AuthController> {
   SignupView({Key? key}) : super(key: key);
 
